@@ -4,6 +4,14 @@ import UIKit
 private var longTapGesturePublishers: [UIView: PassthroughSubject<UIGestureRecognizer.State, Never>] = [:]
 
 public extension UIView {
+    func tapGesturePublisher(with numberOfTapsRequired: Int) -> AnyPublisher<UITapGestureRecognizer, Never> {
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.numberOfTapsRequired = numberOfTapsRequired
+        isUserInteractionEnabled = true
+        addGestureRecognizer(tapGesture)
+        return tapGesture.tapPublisher
+    }
+
     var tapGesturePublisher: AnyPublisher<UITapGestureRecognizer, Never> {
         let tapGesture = UITapGestureRecognizer()
         isUserInteractionEnabled = true
